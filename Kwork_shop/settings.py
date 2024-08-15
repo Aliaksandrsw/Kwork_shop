@@ -24,6 +24,8 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+    'django_celery_results',
+    'payment.apps.PaymentConfig',
 
 ]
 
@@ -104,5 +106,9 @@ CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'django-db'
 
-#CELERY_RESULT_BACKEND = 'django-db'
+STRIPE_PUBLISHABLE_KEY = str(os.getenv('STRIPE_PUBLISHABLE_KEY'))
+STRIPE_SECRET_KEY = str(os.getenv('STRIPE_SECRET_KEY'))
+STRIPE_API_VERSION = str(os.getenv('STRIPE_API_VERSION'))
+

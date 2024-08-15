@@ -1,10 +1,11 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
 from .models import OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
 from .tasks import order_created
+from django.urls import reverse
+from django.shortcuts import render, redirect
 
 
 class OrderCreateView(FormView):
@@ -24,7 +25,8 @@ class OrderCreateView(FormView):
             )
         cart.clear()
         order_created.delay(order.id)
-        return render(self.request, 'orders/order/created.html', {'order': order})
+        self.request.session['order_id'] = order.id
+        return redirect(reverse('payment:process'))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

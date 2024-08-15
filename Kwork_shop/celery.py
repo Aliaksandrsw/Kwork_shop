@@ -4,6 +4,6 @@ from celery import Celery
 
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Kwork_shop.settings')
-app = Celery('Kwork_shop')
+app = Celery('orders')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()

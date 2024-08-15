@@ -1,3 +1,5 @@
+import time
+
 from celery import shared_task
 from django.core.mail import send_mail
 from .models import Order
@@ -27,8 +29,9 @@ def order_created(order_id):
 
 
 
-
 @shared_task
 def test_task():
-    print("Task is running")
-    return 'Done'
+    print("Starting test task")
+    time.sleep(5)
+    print("Test task completed")
+    return "Done"
